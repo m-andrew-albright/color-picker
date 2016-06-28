@@ -440,7 +440,7 @@
 	function installEventListeners(THIS, off) {
 		var onOffEvent = off ? removeEvent : addEvent;
 
-		onOffEvent(_nodes.colorPicker, 'mousedown', function(e) {
+		function touchStart_MouseDown(e) {
 			var event = e || window.event,
 				page = getPageXY(event),
 				target = (event.button || event.which) < 2 ?
@@ -494,6 +494,7 @@
 				_mainTarget.style.display = ''; // ??? for resizer...
 				_mouseMoveAction(event);
 				addEvent(_isIE ? document.body : window, 'mousemove', _mouseMoveAction);
+				addEvent(_isIE ? document.body : window, 'touchmove', _mouseMoveAction);
 				_renderTimer = window[requestAnimationFrame](renderAll);
 			} else {
 				// console.log(className)
@@ -506,7 +507,10 @@
 				return preventDefault(event);
 				// document.activeElement.blur();
 			}
-		});
+		};
+
+		onOffEvent(_nodes.colorPicker, 'mousedown', touchStart_MouseDown);
+		onOffEvent(_nodes.colorPicker, 'touchstart', touchStart_MouseDown);
 
 		onOffEvent(_nodes.colorPicker, 'click', function(e) {
 			focusInstance(THIS);
@@ -531,6 +535,7 @@
 	}
 
 	addEvent(_isIE ? document.body : window, 'mouseup', stopChange);
+	addEvent(_isIE ? document.body : window, 'touchend', stopChange);
 
 	// ------------------------------------------------------ //
 	// --------- Event listner's callback functions  -------- //
@@ -546,6 +551,7 @@
 			// }
 			window[cancelAnimationFrame](_renderTimer);
 			removeEvent(_isIE ? document.body : window, 'mousemove', _mouseMoveAction);
+			removeEvent(_isIE ? document.body : window, 'touchmove', _mouseMoveAction);
 			if (_delayState) { // hapens on inputs
 				_valueType = {type: 'alpha'};
 				renderAll();
@@ -1290,11 +1296,13 @@
 	}
 
 	function getPageXY(e) {
-		var doc = window.document;
+		var doc = window.document,
+			_e = (typeof e.changedTouches !== 'undefined' && e.changedTouches.length)?
+					e.changedTouches[0] : e;
 
 		return {
-			X: e.pageX || e.clientX + doc.body.scrollLeft + doc.documentElement.scrollLeft,
-			Y: e.pageY || e.clientY + doc.body.scrollTop + doc.documentElement.scrollTop
+			X: _e.pageX || _e.clientX + doc.body.scrollLeft + doc.documentElement.scrollLeft,
+			Y: _e.pageY || _e.clientY + doc.body.scrollTop + doc.documentElement.scrollTop
 		};
 	}
 
