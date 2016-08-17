@@ -1,7 +1,8 @@
 ;(function(window, undefined){
 	"use strict"
 
-	var _data = window.ColorPicker, // will be deleted in buildView() and holds:
+	var	document = window.document,
+		_data = window.ColorPicker, // will be deleted in buildView() and holds:
 		// window.ColorPicker = { // comes from colorPicker.data.js and will be overwritten.
 		// 	_html: ..., // holds the HTML markup of colorPicker
 		// 	_cssFunc: ..., // CSS for all the sliders
