@@ -106,7 +106,7 @@
 				// actionCallback: undefined,
 				// convertCallback: undefined,
 			};
-			initInstance(this, options || {});
+			initInstance(this, options || {});
 		};
 
 	window.ColorPicker = ColorPicker; // export differently
@@ -200,7 +200,7 @@
 				memory[n] = {r: tmp[0], g: tmp[1], b: tmp[2], a: tmp[3]}
 			}
 			memos[n].style.cssText = 'background-color: ' + (memory && memory[n] !== undefined ?
-				color2string(memory[n]) + ';' + getOpacityCSS(memory[n]['a'] || 1) : 'rgb(0,0,0);');
+				color2string(memory[n]) + ';' + getOpacityCSS(memory[n]['a'] || 1) : 'rgb(0,0,0);');
 		}
 	};
 
@@ -895,7 +895,7 @@
 		// think this over again, does this need to be like this??
 		if (buttonAction) {
 			preRenderAll(_colors);
-			_mouseMoveAction = _mouseMoveAction || true; // !!!! search for: // this is dirty...
+			_mouseMoveAction = _mouseMoveAction || true; // !!!! search for: // this is dirty...
 			stopChange(e, buttonAction);
 		}
 	}
@@ -1047,7 +1047,7 @@
 			colors['rgbaMixBGMix' + bgType].WCAG2Ratio >= 7 ? 'green' :
 			colors['rgbaMixBGMix' + bgType].WCAG2Ratio >= 4.5 ? 'orange': '';
 		renderVars.noRGBZ = _options['no' + _options.mode.type.toUpperCase() + _options.mode.z] ?
-			(_options.mode.z === 'g' && colors.rgb.g < 0.59 || _options.mode.z === 'b' || _options.mode.z === 'r' ?
+			(_options.mode.z === 'g' && colors.rgb.g < 0.59 || _options.mode.z === 'b' || _options.mode.z === 'r' ?
 			'dark' : 'light') : undefined;
 	}
 
@@ -1312,7 +1312,7 @@
 	}
 
 	function addEvent(obj, type, func) {
-		addEvent.cache = addEvent.cache || {
+		addEvent.cache = addEvent.cache || {
 			_get: function(obj, type, func, checkOnly) {
 				var cache = addEvent.cache[type] || [];
 
