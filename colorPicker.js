@@ -69,7 +69,8 @@
 				mode: 'rgb-b',
 				fps: 60, // 1000 / 60 = ~16.7ms
 				delayOffset: 8,
-				CSSPrefix: 'cp-',
+				CSSPrefixIsolate: '',	//prevent classes with higher weight
+				CSSPrefix: 'cp-',	//for internal classes
 				allMixDetails: true,
 				alphaBG: 'w',
 				imagePath: ''
@@ -302,6 +303,7 @@
 	function buildView(THIS) {
 		var app = document.createElement('div'),
 			prefix = _options.CSSPrefix,
+			prefixIsolate = _options.CSSPrefixIsolate ? _options.CSSPrefixIsolate+' ':'',
 			urlData = 'data:image/png;base64,',
 			addStyleSheet = function(cssText, id) {
 				var style = document.createElement('style');
@@ -321,6 +323,7 @@
 			processCSS = function(doesBAS64){
 				// CSS - system
 				_data._cssFunc = _data._cssFunc.
+					replace(/‰/g, prefixIsolate).
 					replace(/§/g, prefix).
 					replace('_patches.png', doesBAS64 ? urlData + _data._patchesPng : _options.imagePath + '_patches.png').
 					replace('_vertical.png', doesBAS64 ? urlData + _data._verticalPng : _options.imagePath + '_vertical.png').
@@ -330,6 +333,7 @@
 				// CSS - main
 				if (!_options.customCSS) {
 					_data._cssMain = _data._cssMain.
+						replace(/‰/g, prefixIsolate).
 						replace(/§/g, prefix).
 						replace('_bgs.png', doesBAS64 ? urlData + _data._bgsPng : _options.imagePath + '_bgs.png').
 						replace('_icons.png', doesBAS64 ? urlData + _data._iconsPng : _options.imagePath + '_icons.png').
