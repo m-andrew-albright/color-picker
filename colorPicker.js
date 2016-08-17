@@ -1158,9 +1158,9 @@
 			colors._rgb.b !== colors.rgb.b
 		] : [];
 		if (tmp.join('') !== cashedVars.outOfGammut) {
-			nodes.rgb_r_labl.firstChild.data = tmp[0] ? '!' : ' ';
-			nodes.rgb_g_labl.firstChild.data = tmp[1] ? '!' : ' ';
-			nodes.rgb_b_labl.firstChild.data = tmp[2] ? '!' : ' ';
+			nodes.rgb_r_labl.firstChild.data = tmp[0] ? '!' : '.';
+			nodes.rgb_g_labl.firstChild.data = tmp[1] ? '!' : '.';
+			nodes.rgb_b_labl.firstChild.data = tmp[2] ? '!' : '.';
 			cashedVars.outOfGammut = tmp.join('');
 		}
 		if (renderVars.noRGBZ) {
