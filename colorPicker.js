@@ -445,6 +445,9 @@
 	function installEventListeners(THIS, off) {
 		var onOffEvent = off ? removeEvent : addEvent;
 
+		onOffEvent(_isIE ? document.body : window, 'mouseup', stopChange);
+		onOffEvent(_isIE ? document.body : window, 'touchend', stopChange);
+
 		function touchStart_MouseDown(e) {
 			var event = e || window.event,
 				page = getPageXY(event),
@@ -538,9 +541,6 @@
 			return preventDefault(e);
 		});
 	}
-
-	addEvent(_isIE ? document.body : window, 'mouseup', stopChange);
-	addEvent(_isIE ? document.body : window, 'touchend', stopChange);
 
 	// ------------------------------------------------------ //
 	// --------- Event listner's callback functions  -------- //
