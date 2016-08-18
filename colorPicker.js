@@ -306,19 +306,19 @@
 			prefixIsolate = _options.CSSPrefixIsolate ? _options.CSSPrefixIsolate+' ':'',
 			urlData = 'data:image/png;base64,',
 			addStyleSheet = function(cssText, id) {
-				var style = document.createElement('style');
+				var style = document.createElement('style'),
+					head = document.head || document.getElementsByTagName("head")[0] || document.body;
 
 				style.setAttribute('type', 'text/css');
 				if (id) {
 					style.setAttribute('id', id);
 				}
-				if (!style.styleSheet) {
-					style.appendChild(document.createTextNode(cssText));
-				}
-				document.getElementsByTagName('head')[0].appendChild(style);
 				if (style.styleSheet) { // IE compatible
-					document.styleSheets[document.styleSheets.length-1].cssText = cssText;
+					style.styleSheet.cssText = cssText;
+				} else { //other browsers
+					style.innerHTML = cssText;
 				}
+				head.appendChild(style);
 			},
 			processCSS = function(doesBAS64){
 				// CSS - system
