@@ -1,5 +1,5 @@
-(function (window) {
-	window.jsColorPicker = function(selectors, config) {
+(function (window, namespace) {
+	namespace.jsColorPicker = function(selectors, config) {
 		var renderCallback = function(colors, mode) {
 				var options = this,
 					input = options.input,
@@ -54,18 +54,18 @@
 						);
 					}
 					cookieTXT = '\'' + cookieTXT.join('\',\'') + '\'';
-					ColorPicker.docCookies('colorPickerMemos' + (options.noAlpha ? 'NoAlpha' : ''), cookieTXT);
+					namespace.ColorPicker.docCookies('colorPickerMemos' + (options.noAlpha ? 'NoAlpha' : ''), cookieTXT);
 				} else if (action === 'resizeApp') {
-					ColorPicker.docCookies('colorPickerSize', colorPicker.color.options.currentSize);
+					namespace.ColorPicker.docCookies('colorPickerSize', colorPicker.color.options.currentSize);
 				} else if (action === 'modeChange') {
 					var mode = colorPicker.color.options.mode;
 
-					ColorPicker.docCookies('colorPickerMode', mode.type + '-' + mode.z);
+					namespace.ColorPicker.docCookies('colorPickerMode', mode.type + '-' + mode.z);
 				}
 			},
 			createInstance = function(elm, config) {
 				var initConfig = {
-						klass: window.ColorPicker,
+						klass: namespace.ColorPicker,
 						input: elm,
 						patch: elm,
 						isIE8: !!document.all && !document.addEventListener, // Opera???
@@ -77,14 +77,14 @@
 						/* --- regular colorPicker options from this point --- */
 						color: extractValue(elm),
 						initStyle: 'display: none',
-						mode: ColorPicker.docCookies('colorPickerMode') || 'hsv-h',
+						mode: namespace.ColorPicker.docCookies('colorPickerMode') || 'hsv-h',
 						// memoryColors: (function(colors, config) {
 						// 	return config.noAlpha ?
 						// 		colors.replace(/\,\d*\.*\d*\)/g, ',1)') : colors;
 						// })($.docCookies('colorPickerMemos'), config || {}),
-						memoryColors: ColorPicker.docCookies('colorPickerMemos' +
+						memoryColors: namespace.ColorPicker.docCookies('colorPickerMemos' +
 							((config || {}).noAlpha ? 'NoAlpha' : '')),
-						size: ColorPicker.docCookies('colorPickerSize') || 1,
+						size: namespace.ColorPicker.docCookies('colorPickerSize') || 1,
 						renderCallback: renderCallback,
 						actionCallback: actionCallback
 					};
@@ -96,10 +96,10 @@
 			},
 			doEventListeners = function(elm, multiple, off) {
 				var ie8 = !document.addEventListener,
-				    onOff = off ? (ie8?'detachEvent':'removeEventListener') : (ie8?'attachEvent':'addEventListener'),
+					onOff = off ? (ie8?'detachEvent':'removeEventListener') : (ie8?'attachEvent':'addEventListener'),
 					focusListener = function(e) {
 						var input = this,
-							position = window.ColorPicker.getOrigin(input),
+							position = namespace.ColorPicker.getOrigin(input),
 							index = multiple ? Array.prototype.indexOf.call(elms, this) : 0,
 							colorPicker = colorPickers[index] ||
 								(colorPickers[index] = createInstance(this, config)),
@@ -136,7 +136,7 @@
 							colorPickerUI = (colorPicker ? colorPicker.nodes.colorPicker : undefined),
 							animationSpeed = colorPicker ? colorPicker.color.options.animationSpeed : 0,
 							isColorPicker = colorPicker && (function(elm) {
-								while (elm) {
+								while (elm && elm instanceof HTMLElement) {
 									if ((elm.className || '').indexOf('cp-app') !== -1) return elm;
 									elm = elm.parentNode;
 								}
@@ -167,11 +167,11 @@
 				}
 			},
 			// this is a way to prevent data binding on HTMLElements
-			colorPickers = window.jsColorPicker.colorPickers || [],
+			colorPickers = namespace.jsColorPicker.colorPickers || [],
 			elms = document.querySelectorAll(selectors),
-			testColors = new window.Colors({customBG: config.customBG, allMixDetails: true});
+			testColors = new namespace.Colors({customBG: config.customBG, allMixDetails: true});
 
-		window.jsColorPicker.colorPickers = colorPickers;
+		namespace.jsColorPicker.colorPickers = colorPickers;
 
 		for (var n = 0, m = elms.length; n < m; n++) {
 			var elm = elms[n];
@@ -197,10 +197,10 @@
 			}
 		};
 
-		return window.jsColorPicker.colorPickers;
+		return namespace.jsColorPicker.colorPickers;
 	};
 
-	window.ColorPicker.docCookies = function(key, val, options) {
+	namespace.ColorPicker.docCookies = function(key, val, options) {
 		var encode = encodeURIComponent, decode = decodeURIComponent,
 			cookies, n, tmp, cache = {},
 			days;
@@ -234,4 +234,4 @@
 				(options.secure  ? '; secure'                        : '');
 		}
 	};
-})(this);
+})(this, CPNamespace||window);
