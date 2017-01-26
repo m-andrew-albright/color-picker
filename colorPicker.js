@@ -1,9 +1,9 @@
-;(function(window, undefined){
+;(function(window, namespace){
 	"use strict"
 
 	var	document = window.document,
-		_data = window.ColorPicker, // will be deleted in buildView() and holds:
-		// window.ColorPicker = { // comes from colorPicker.data.js and will be overwritten.
+		_data = namespace.ColorPicker, // will be deleted in buildView() and holds:
+		// namespace.ColorPicker = { // comes from colorPicker.data.js and will be overwritten.
 		// 	_html: ..., // holds the HTML markup of colorPicker
 		// 	_cssFunc: ..., // CSS for all the sliders
 		// 	_cssMain: ..., // CSS of the GUI
@@ -109,7 +109,7 @@
 			initInstance(this, options || {});
 		};
 
-	window.ColorPicker = ColorPicker; // export differently
+	namespace.ColorPicker = ColorPicker; // export differently
 	ColorPicker.addEvent = addEvent;
 	ColorPicker.removeEvent = removeEvent;
 	ColorPicker.getOrigin = getOrigin;
@@ -217,7 +217,7 @@
 		}
 		_isIE = document.createStyleSheet !== undefined && document.getElementById || !!window.MSInputMethodContext;
 		_doesOpacity = typeof document.body.style.opacity !== 'undefined';
-		_colorInstance = new Colors(THIS.options);
+		_colorInstance = new namespace.Colors(THIS.options);
 		// We transfer the responsibility to the instance of Color (to save space and memory)
 		delete THIS.options;
 		_options = _colorInstance.options;
@@ -1424,4 +1424,4 @@
 		return _renderTimer = null;
 	};
 
-})(window);
+})(window, CPNamespace||window);
