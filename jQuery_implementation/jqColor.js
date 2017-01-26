@@ -1,4 +1,4 @@
-(function ($, window) {
+(function ($, window, namespace) {
 	$.fn.extend({
 		colorPicker: function(config) {
 			var renderCallback = function(colors, mode) {
@@ -65,7 +65,7 @@
 				},
 				createInstance = function(elm, config) {
 					var initConfig = {
-							klass: window.ColorPicker,
+							klass: namespace.ColorPicker,
 							input: elm,
 							patch: elm,
 							isIE8: !!document.all && !document.addEventListener, // Opera???
@@ -163,7 +163,7 @@
 				},
 				that = this,
 				colorPickers = $.fn.colorPicker.colorPickers || [], // this is a way to prevent data binding on HTMLElements
-				testColors = new window.Colors({
+				testColors = new namespace.Colors({
 					customBG: (config && config.customBG) || '#FFFFFF',
 					allMixDetails: true
 				});
@@ -227,4 +227,4 @@
 				(options.secure  ? '; secure'                        : '');
 		}
 	};
-})(jQuery, this);
+})(jQuery, this, CPNamespace||window);
