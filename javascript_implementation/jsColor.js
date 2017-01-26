@@ -95,7 +95,8 @@
 				return new initConfig.klass(initConfig);
 			},
 			doEventListeners = function(elm, multiple, off) {
-				var onOff = off ? 'removeEventListener' : 'addEventListener',
+				var ie8 = !document.addEventListener,
+				    onOff = off ? (ie8?'detachEvent':'removeEventListener') : (ie8?'attachEvent':'addEventListener'),
 					focusListener = function(e) {
 						var input = this,
 							position = window.ColorPicker.getOrigin(input),
