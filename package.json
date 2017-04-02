@@ -1,10 +1,11 @@
 {
-  "name": "colorPicker",
+  "name": "color-picker",
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "http://github.com/PitPik/colorPicker.git"
+    "url": "http://github.com/m-andrew-albright/colorPicker.git"
   },
+  "main": "colorPicker.js",
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-uglify": "^0.5.1"
