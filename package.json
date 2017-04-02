@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "repository": {
     "type": "git",
-    "url": "http://github.com/m-andrew-albright/colorPicker.git"
+    "url": "http://github.com/m-andrew-albright/color-picker.git"
   },
   "main": "colorPicker.js",
   "devDependencies": {
